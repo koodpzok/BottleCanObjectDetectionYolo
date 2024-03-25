@@ -1,0 +1,48 @@
+Object detection with Python FULL COURSE | Computer vision - https://www.youtube.com/watch?v=UL2cfTTqdNo [Reading]
+pip3 install ultralytics
+data annotation format: https://opencv.github.io/cvat/docs/manual/advanced/formats/
+data annotation tool: https://cvat.ai
+export annotations as YOLO 1.1
+format:
+<object-class> <x_center> <y_center> <width> <height>
+# image_name.txt:
+# label_id - id from obj.names
+# cx, cy - relative coordinates of the bbox center
+# rw, rh - relative size of the bbox
+# label_id cx cy rw rh
+
+structure:
+data/images
+ - /train contains .jpg, .png
+data/labels
+ - /train contains .txt
+
+***training our own custom data
+model = YOLO("yolov8n.yaml")  # build a new model from scratch
+results = model.train(data="config.yaml", epochs=1)  # train the model
+
+
+How to use OpenImages to Create Datasets for Yolo - https://www.youtube.com/watch?v=tly7mYK7fv8
+Clone https://github.com/EscVM/OIDv4_ToolKit
+To use OIDv4_ToolKit:
+pip3 install pandas numpy awscli urllib3 tqdm opencv-python
+
+inside OIDv4_ToolKit project
+python main.py downloader --classes Tin_can Bottle --type_csv train --limit 1000
+#python main.py downloader --classes Tin_can Bottle --type_csv validation --limit 1000
+#python main.py downloader --classes Tin_can Bottle --type_csv test --limit 1000
+
+then go to https://app.roboflow.com and upload the whole folder and divide into train, val, test dataset as 70:20:10 ratio
+
+yolo task=detect mode=val model=runs/detect/train7/weights/best.pt data=config.yaml 
+
+-yolov8n not accurate
+
+Try faster r cnn with detectron2
+Clone https://github.com/facebookresearch/detectron2
+
+need to install microsoft visual c++ 2015-2022 redistributable (x64), microsoft visual c++ 2015-2022 redistributable (x86)
+
+#install it from a local clone:
+git clone https://github.com/facebookresearch/detectron2
+python -m pip3 install -e detectron2

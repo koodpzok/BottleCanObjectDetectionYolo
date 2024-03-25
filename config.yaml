@@ -1,0 +1,9 @@
+path: D:/Program Files/Python Projects/CambeerObjectDetectionTraining/data
+train: images/train # relative to 'path'
+val: images/valid # relative to 'path'
+test: images/test # relative to 'path'
+
+# Classes
+names:
+  0: Bottle
+  1: Tin-can
