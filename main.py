@@ -41,7 +41,7 @@ if __name__ ==  '__main__':
     for dirpath, dirname_list, filename_list in dir_list:
         # create bottle, tin-can, unknown folders
         if 'bottle' not in dirpath and 'tin-can' not in dirpath and 'unknown' not in dirpath:
-            if len(filename_list) > 0:
+            if len(filename_list) > 0 and not (len(filename_list) == 1 and filename_list[0] == '.DS_Store'):
                 bottle_folder = os.path.join(dirpath, 'bottle')  # 0
                 tin_can_folder = os.path.join(dirpath, 'tin-can')  # 1
                 unknown_folder = os.path.join(dirpath, 'unknown')  # unknown class
@@ -54,10 +54,11 @@ if __name__ ==  '__main__':
 
             for file_name in filename_list:
                 file_name_path = os.path.join(dirpath, file_name)
-                if file_name.endswith('.svg'):
+                if file_name.endswith(('.svg', 'html')) or file_name == '.DS_Store':
                     os.remove(file_name_path)
+
                 if file_name.endswith(('.png', '.jpg', '.jpeg')):
-                    results = model.predict(source=file_name_path, conf=0.5, save=False)
+                    results = model.predict(source=file_name_path, conf=0.9, save=False)
 
                     # no detection
                     if len(results[0].boxes.cls) == 0:
