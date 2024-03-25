@@ -54,8 +54,9 @@ if __name__ ==  '__main__':
 
             for file_name in filename_list:
                 file_name_path = os.path.join(dirpath, file_name)
-                if file_name.endswith(('.svg', 'html')) or file_name == '.DS_Store':
+                if file_name.endswith(('.svg', 'html')) or file_name == '.DS_Store' or os.path.getsize(file_name_path) <= 30000:
                     os.remove(file_name_path)
+                    continue
 
                 if file_name.endswith(('.png', '.jpg', '.jpeg')):
                     results = model.predict(source=file_name_path, conf=0.9, save=False)
