@@ -53,8 +53,10 @@ if __name__ ==  '__main__':
                     os.makedirs(unknown_folder)
 
             for file_name in filename_list:
+                file_name_path = os.path.join(dirpath, file_name)
+                if file_name.endswith('.svg'):
+                    os.remove(file_name_path)
                 if file_name.endswith(('.png', '.jpg', '.jpeg')):
-                    file_name_path = os.path.join(dirpath, file_name)
                     results = model.predict(source=file_name_path, conf=0.5, save=False)
 
                     # no detection
@@ -63,7 +65,7 @@ if __name__ ==  '__main__':
                             shutil.move(file_name_path, os.path.join(unknown_folder, 'unknown_' + file_name))
                         else:
                             shutil.move(file_name_path, os.path.join(unknown_folder, file_name))
-                        print('moved file to unknown folder')
+                        #print('moved file to unknown folder')
                     else:
                         # bottle class with highest probability
                         if results[0].boxes.cls[0] == 0:
@@ -71,14 +73,14 @@ if __name__ ==  '__main__':
                                 shutil.move(file_name_path, os.path.join(bottle_folder, 'bottle_' + file_name))
                             else:
                                 shutil.move(file_name_path, os.path.join(bottle_folder, file_name))
-                            print('moved file to bottle folder')
+                            #print('moved file to bottle folder')
                         # tin-can class with highest probability
                         elif results[0].boxes.cls[0] == 1:
                             if not file_name.startswith('tin-can_'):
                                 shutil.move(file_name_path, os.path.join(tin_can_folder, 'tin-can_' + file_name))
                             else:
                                 shutil.move(file_name_path, os.path.join(tin_can_folder, file_name))
-                            print('moved file to tin-can folder')
+                            #print('moved file to tin-can folder')
 
 
 
