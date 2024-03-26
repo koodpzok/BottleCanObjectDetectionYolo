@@ -36,6 +36,7 @@ if __name__ ==  '__main__':
     model = YOLO("./best.pt")
     import os
     import shutil
+    import time
     path_img = "./prediction"
     dir_list = os.walk(path_img)
     for dirpath, dirname_list, filename_list in dir_list:
@@ -59,7 +60,7 @@ if __name__ ==  '__main__':
                     continue
 
                 if file_name.endswith(('.png', '.jpg', '.jpeg')):
-                    results = model.predict(source=file_name_path, conf=0.9, save=False)
+                    results = model.predict(source=file_name_path, conf=0.8, save=False)
 
                     # no detection
                     if len(results[0].boxes.cls) == 0:
@@ -83,6 +84,6 @@ if __name__ ==  '__main__':
                             else:
                                 shutil.move(file_name_path, os.path.join(tin_can_folder, file_name))
                             #print('moved file to tin-can folder')
-
+                time.sleep(0.2)
 
 
